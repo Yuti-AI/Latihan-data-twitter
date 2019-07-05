@@ -1,0 +1,57 @@
+install.packages('tm')
+install.packages('worldcloud')
+install.packages('wordcloud2')
+install.packages('twitteR')
+install.packages('rtweet')
+library(tm)
+library(wordcloud)
+library(wordcloud2)
+library(twitteR)
+library(rtweet)
+
+#masukan dengan API Twitter personal
+consumer_key <- ""
+consumer_secret <- ""
+access_token    <- ""
+access_secret   <- ""
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+#sampai sini masih mulus
+
+tw = searchTwitter('jokowi + presiden + joko widodo', 
+                   n = 10000,
+                   retryOnRateLimit = 10e3)
+get_oauth_sig(consumer_key, consumer_secret, access_token, access_secret)
+#di sini sempat muncul komentar httr.OAth tidak bisa 
+
+#install httr dulu
+install.packages('httr')
+#nyoba lagi
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, access_secret)
+tw = searchTwitter('jokowi + presiden + joko widodo', 
+                   n = 10000,
+                   retryOnRateLimit = 10e3)
+#masih gagal T_T
+                   
+getwd()
+tw <- readRDS('tweetmentah.rds')
+library(ggplot)
+library(ggplot2)
+ts_plot(tw, "1 hour") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold")) +
+  ggplot2::labs(
+    x = NULL, y = NULL,
+    title = "Frequency of Jokowi + presiden Twitter statuses from past 1 Week",
+    subtitle = "Twitter status (tweet) counts aggregated using three-hour intervals",
+    caption = "\nSource: Data collected from Twitter's REST API via rtweet")
+saveRDS(tw,file='tweetmentah.rds')
+install.packages('tseries')
+ts_plot(tw, "1 hour") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold")) +
+  ggplot2::labs(
+    x = NULL, y = NULL,
+    title = "Frequency of Jokowi + presiden Twitter statuses from past 1 Week",
+    subtitle = "Twitter status (tweet) counts aggregated using three-hour intervals",
+    caption = "\nSource: Data collected from Twitter's REST API via rtweet")
+install.packages('forecast')
